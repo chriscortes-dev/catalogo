@@ -1,0 +1,23 @@
+# entorno
+.env
+.env.*
+
+# python
+__pycache__/
+*.pyc
+
+# entorno virtual
+venv/
+env/
+
+# base de datos local
+db.sqlite3
+
+# archivos del sistema
+.DS_Store
+
+# vscode
+.vscode/
+
+# storage de archivos
+media/

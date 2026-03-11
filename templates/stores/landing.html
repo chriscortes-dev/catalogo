@@ -1,0 +1,70 @@
+{% extends "stores/base.html" %}
+
+{% block title %}
+{{ store.name }} - Inicio
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-6 py-12">
+
+  <!-- HERO -->
+  <section class="text-center mb-16">
+
+    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-4">
+      {{ store.hero_title }}
+    </h1>
+
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+      {{ store.hero_subtitle }}
+    </p>
+
+  </section>
+
+
+  <!-- TITLE CATEGORIES -->
+  <div class="flex items-center justify-between mb-6">
+
+    <h2 class="text-2xl font-bold text-gray-900">
+      Categorías
+    </h2>
+
+    <div class="h-px bg-gray-200 flex-1 ml-6"></div>
+
+  </div>
+
+
+  <!-- GRID -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+    {% for category in categories %}
+
+    <a href="{% url 'catalog' category.slug %}"
+      class="group relative block overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition duration-300">
+
+      {% if category.image %}
+      <img src="{{ category.image.url }}" alt="{{ category.name }}"
+        class="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110">
+      {% endif %}
+
+      <!-- overlay -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+
+      <!-- texto -->
+      <div class="absolute bottom-0 left-0 right-0 p-6">
+
+        <h3 class="text-white text-2xl font-bold tracking-wide group-hover:translate-y-[-2px] transition">
+          {{ category.name }}
+        </h3>
+
+      </div>
+
+    </a>
+
+    {% endfor %}
+
+  </div>
+
+</div>
+
+{% endblock %}

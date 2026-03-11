@@ -1,0 +1,103 @@
+{% extends "stores/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+  <!-- PRODUCT IMAGE -->
+  <div>
+
+    {% if product.image %}
+    <img src="{{ product.image.url }}" class="w-full rounded-lg shadow object-cover">
+    {% endif %}
+
+  </div>
+
+
+  <!-- PRODUCT INFO -->
+  <div class="flex flex-col">
+
+    <h1 class="text-3xl font-bold mb-3">
+      {{ product.name }}
+    </h1>
+
+    <p class="text-gray-600 mb-6">
+      {{ product.description|linebreaksbr }}
+    </p>
+
+
+    <!-- VARIANTS -->
+    <h3 class="font-semibold mb-4">
+      Opciones de compra
+    </h3>
+
+    <div class="space-y-3 mb-6">
+
+      {% for variant in variants %}
+
+      <label class="block border rounded-lg p-4 cursor-pointer
+                    hover:border-black transition">
+
+        <div class="flex justify-between items-center">
+
+          <div class="flex items-start gap-3">
+
+            <input type="radio" name="variant" class="variant-radio mt-1" data-id="{{ variant.id }}"
+              data-name="{{ variant.name }}" data-price="{{ variant.price }}"
+              data-min="{{ variant.min_order_quantity }}">
+
+            <div>
+
+              <div class="font-medium">
+                {{ variant.name }}
+              </div>
+
+              <p class="text-sm text-gray-500">
+                Mínimo: {{ variant.min_order_quantity }}
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="font-semibold text-lg">
+            ${{ variant.price }}
+          </div>
+
+        </div>
+
+      </label>
+
+      {% endfor %}
+
+    </div>
+
+
+    <!-- ADD TO CART -->
+    <button id="addToCartBtn" class="w-full bg-black text-white py-4 rounded-lg
+             text-sm tracking-wide
+             hover:bg-gray-800 transition">
+
+      Agregar al carrito
+
+    </button>
+
+  </div>
+
+</div>
+
+{% endblock %}
+
+
+
+{% block extra_scripts %}
+
+<script>
+  window.PRODUCT_CONTEXT = {
+    productId: "{{ product.id }}",
+    productName: "{{ product.name|escapejs }}"
+  };
+</script>
+
+{% endblock %}

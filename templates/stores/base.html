@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    {% if store %}
+    {{ store.name }}
+    {% else %}
+    Mi SaaS
+    {% endif %}
+  </title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <header class="bg-white shadow-sm border-b">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      <!-- Marca -->
+      <a href="/" class="flex items-center gap-3 group">
+
+        {% if store and store.logo %}
+        <img src="{{ store.logo.url }}" alt="{{ store.name }}"
+          class="h-12 w-12 rounded-full object-cover border border-gray-200 group-hover:scale-105 transition">
+        {% endif %}
+
+        <span class="text-xl font-semibold text-gray-900 tracking-tight">
+          {{ store.name }}
+        </span>
+
+      </a>
+
+
+      <!-- Carrito -->
+      <button onclick="toggleCart()"
+        class="relative flex items-center justify-center w-11 h-11 rounded-full hover:bg-gray-100 transition text-xl">
+        🛒
+      </button>
+
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-6">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="bg-gray-50 border-t mt-16">
+
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+
+      <!-- Marca -->
+      <div>
+
+        <div class="flex items-center gap-3 mb-3">
+
+          {% if store.logo %}
+          <img src="{{ store.logo.url }}" alt="{{ store.name }}" class="h-12 w-12 rounded-full object-cover">
+          {% endif %}
+
+          <div>
+
+            <div class="text-lg font-semibold text-gray-900">
+              {{ store.name }}
+            </div>
+
+            {% if store.instagram_username %}
+            <a href="https://instagram.com/{{ store.instagram_username }}" target="_blank" rel="noopener noreferrer"
+              class="text-sm text-gray-500 hover:text-gray-900 transition">
+              @{{ store.instagram_username }}
+            </a>
+            {% endif %}
+
+          </div>
+
+        </div>
+
+        <p class="text-sm text-gray-600 max-w-xs">
+          {{ store.hero_subtitle }}
+        </p>
+
+      </div>
+
+
+      <!-- Contacto -->
+      <div>
+
+        <h3 class="font-semibold text-gray-900 mb-4">
+          Contacto
+        </h3>
+
+        <ul class="space-y-2 text-sm text-gray-600">
+
+          {% if store.address %}
+          <li>
+            <a href="https://www.google.com/maps/search/?api=1&query={{ store.address|urlencode }}" target="_blank"
+              rel="noopener noreferrer" class="hover:text-gray-900 transition">
+              📍 {{ store.address }}
+            </a>
+          </li>
+          {% endif %}
+
+          {% if store.phone %}
+          <li>
+            📞 {{ store.phone }}
+          </li>
+          {% endif %}
+
+          {% if store.email %}
+          <li>
+            ✉ {{ store.email }}
+          </li>
+          {% endif %}
+
+        </ul>
+
+      </div>
+
+
+      <!-- Atención -->
+      <div>
+
+        <h3 class="font-semibold text-gray-900 mb-4">
+          Atención
+        </h3>
+
+        <ul class="space-y-2 text-sm">
+
+          <li>
+            <a href="/" class="text-gray-600 hover:text-gray-900 transition">
+              Inicio
+            </a>
+          </li>
+
+          {% if store.whatsapp_number %}
+          <li>
+            <a href="https://wa.me/{{ store.whatsapp_number }}?text=Hola%20quiero%20hacer%20una%20consulta"
+              class="text-green-600 hover:text-green-700 font-medium">
+              WhatsApp
+            </a>
+          </li>
+          {% endif %}
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+  {% include "components/cart.html" %}
+
+  <script>
+    window.STORE_CONTEXT = {
+      whatsapp: "{{ store.whatsapp_number }}",
+      name: "{{ store.name|escapejs }}"
+    };
+  </script>
+
+  <script src="{% static 'js/cart.js' %}"></script>
+
+  {% block extra_scripts %}{% endblock %}
+
+</body>
+
+</html>
