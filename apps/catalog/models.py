@@ -4,7 +4,6 @@ from django.utils.text import slugify
 from apps.stores.models import Store
 import uuid
 
-
 def category_image_path(instance, filename):
     ext = filename.split('.')[-1]
     return f"stores/{instance.store.slug}/categories/{uuid.uuid4()}.{ext}"
