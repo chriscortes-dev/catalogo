@@ -1,6 +1,6 @@
 # entorno
 .env
-.env.*
+.env.local
 
 # python
 __pycache__/
