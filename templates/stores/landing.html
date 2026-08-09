@@ -39,7 +39,7 @@
 
     {% for category in categories %}
 
-    <a href="{% url 'catalog' category.slug %}"
+    <a href="{% url 'catalog' store.slug category.slug %}"
       class="group relative block overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition duration-300">
 
       {% if category.image %}

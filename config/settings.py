@@ -32,12 +32,12 @@ DEBUG =True
 
 if DEBUG:
     ALLOWED_HOSTS = [
-        ".catalogo.local",
+        "localhost",
         "127.0.0.1",
     ]
 else:
     ALLOWED_HOSTS = [
-        ".catalogo.cl"
+        "catalogo.cl"
     ]
     
 # Application definition
@@ -65,7 +65,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'apps.core.middleware.StoreMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'

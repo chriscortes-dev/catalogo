@@ -3,32 +3,39 @@ from django.core.paginator import Paginator
 from django.db.models import Prefetch
 
 from apps.catalog.models import Category, Product, ProductVariant
+from apps.stores.models import Store
 
 
-def store_landing_view(request):
+def _get_store(store_slug):
+    return get_object_or_404(
+        Store,
+        slug=store_slug,
+        is_active=True
+    )
 
-    if not request.store:
-        return render(request, "marketing_landing.html")
+
+def store_landing_view(request, store_slug):
+
+    store = _get_store(store_slug)
 
     categories = Category.objects.filter(
-        store=request.store,
+        store=store,
         is_active=True
     )
 
     return render(request, "stores/landing.html", {
-        "store": request.store,
+        "store": store,
         "categories": categories
     })
 
 
-def catalog_view(request, category_slug):
+def catalog_view(request, store_slug, category_slug):
 
-    if not request.store:
-        return render(request, "marketing_landing.html")
+    store = _get_store(store_slug)
 
     category = get_object_or_404(
         Category,
-        store=request.store,
+        store=store,
         slug=category_slug,
         is_active=True
     )
@@ -36,7 +43,7 @@ def catalog_view(request, category_slug):
     products_qs = (
         Product.objects
         .filter(
-            store=request.store,
+            store=store,
             category=category,
             is_active=True
         )
@@ -53,20 +60,19 @@ def catalog_view(request, category_slug):
     products = paginator.get_page(page_number)
 
     return render(request, "catalog/catalog.html", {
-        "store": request.store,
+        "store": store,
         "category": category,
         "products": products
     })
 
 
-def product_detail_view(request, category_slug, product_slug):
+def product_detail_view(request, store_slug, category_slug, product_slug):
 
-    if not request.store:
-        return render(request, "marketing_landing.html")
+    store = _get_store(store_slug)
 
     category = get_object_or_404(
         Category,
-        store=request.store,
+        store=store,
         slug=category_slug,
         is_active=True
     )
@@ -78,14 +84,14 @@ def product_detail_view(request, category_slug, product_slug):
                 queryset=ProductVariant.objects.filter(is_active=True)
             )
         ),
-        store=request.store,
+        store=store,
         category=category,
         slug=product_slug,
         is_active=True
     )
 
     return render(request, "catalog/product_detail.html", {
-        "store": request.store,
+        "store": store,
         "product": product,
         "category_slug": category_slug,
         "product_slug": product_slug,

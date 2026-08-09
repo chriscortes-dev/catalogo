@@ -5,7 +5,9 @@ Django==6.0.3
 django-storages==1.14.6
 jmespath==1.1.0
 pillow==12.1.1
-psycopg2==2.9.11
+# psycopg2 solo es necesario para PostgreSQL. En local (SQLite) no se usa;
+# para instalarlo en WSL se requiere primero: sudo apt-get install -y libpq-dev
+# psycopg2==2.9.11
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
 s3transfer==0.16.0

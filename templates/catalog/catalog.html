@@ -15,7 +15,7 @@
 
     {% for product in products %}
 
-    <a href="{% url 'product_detail' category.slug product.slug %}" class="group block">
+    <a href="{% url 'product_detail' store.slug category.slug product.slug %}" class="group block">
 
         <div class="bg-white rounded-lg overflow-hidden
                     border hover:shadow-lg transition">

@@ -17,9 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from apps.core.views import home_view
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # Apps primero
-    path("", include("apps.stores.urls")),
+    # Landing de plataforma
+    path("", home_view, name="home"),
+
+    # Tiendas multitenant por ruta: /<slug:store_slug>/...
+    path("<slug:store_slug>/", include("apps.stores.urls")),
 ]
