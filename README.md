@@ -1,8 +1,7 @@
 # Catálogo — Plataforma multitenant (Lab de práctica)
 
-Proyecto de práctica para aprender desarrollo Django y testing de seguridad
-(tipo [OWASP Juice Shop](https://owasp.org/www-project-juice-shop/)): una
-plataforma B2B de catálogos donde cada **tienda** tiene su propio catálogo
+Proyecto de práctica para aprender desarrollo Django y testing de seguridad: 
+una plataforma B2B de catálogos donde cada **tienda** tiene su propio catálogo
 de categorías, productos y variantes, aislados por tenant.
 
 > ⚠️ **Aviso de seguridad**
